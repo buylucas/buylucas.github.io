@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buy Lucas</title>
+  <title>Bid for Product</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,9 +22,11 @@
       padding: 40px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
     }
     h1 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: #333;
       margin-bottom: 20px;
     }
@@ -34,26 +36,79 @@
       border-radius: 10px;
       margin-bottom: 20px;
     }
-    a {
-      display: inline-block;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
       padding: 10px 20px;
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: #fff;
       background-color: #007bff;
+      border: none;
       border-radius: 5px;
-      text-decoration: none;
+      cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    a:hover {
+    button:hover {
       background-color: #0056b3;
+    }
+    .highest-bid {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .highest-bid span {
+      font-weight: bold;
+      color: #007bff;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Buy Lucas!</h1>
-    <img src="./png.png" alt="Lucas Image"> <!-- Replace with your image URL -->
-    <a href="https://forms.gle/your-google-form-link" target="_blank">Order Now</a> <!-- Replace with your Google Form link -->
+    <h1>Bid for Product</h1>
+    <img src="https://via.placeholder.com/400" alt="Product Image"> <!-- Replace with your image URL -->
+    <div class="highest-bid">
+      Highest Bid: <span id="highestBid">$0</span>
+    </div>
+    <form id="bidForm">
+      <input type="text" id="firstName" placeholder="First Name" required>
+      <input type="text" id="lastName" placeholder="Last Name" required>
+      <input type="number" id="bidAmount" placeholder="Bid Amount ($)" required>
+      <button type="submit">Submit Bid</button>
+    </form>
   </div>
+
+  <script>
+    let highestBid = 0;
+
+    document.getElementById('bidForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get form values
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const bidAmount = parseFloat(document.getElementById('bidAmount').value);
+
+      // Check if the bid is higher than the current highest bid
+      if (bidAmount > highestBid) {
+        highestBid = bidAmount;
+        document.getElementById('highestBid').textContent = `$${highestBid}`;
+        alert(`Congratulations, ${firstName} ${lastName}! Your bid of $${bidAmount} is the highest so far.`);
+      } else {
+        alert(`Sorry, ${firstName} ${lastName}. Your bid of $${bidAmount} is not higher than the current highest bid of $${highestBid}.`);
+      }
+
+      // Clear the form
+      document.getElementById('bidForm').reset();
+    });
+  </script>
 </body>
 </html>
